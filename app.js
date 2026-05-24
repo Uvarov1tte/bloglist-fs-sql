@@ -1,9 +1,6 @@
-require('dotenv').config()
 const express = require('express')
-const { Sequelize } = require('sequelize')
 const blogsRouter = require('./controllers/blogs')
 const app = express()
-require('./postgres/postgres_init')
 
 app.use(express.json())
 

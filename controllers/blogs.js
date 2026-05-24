@@ -1,6 +1,6 @@
 const blogsRouter = require('express').Router()
 // const Blog = require('../mongo/models/blog')
-const Blog = require('../postgres/models/blog')
+const { Blog } = require('../models')
 
 blogsRouter.get('/', async (req, res) => {
     // const blogs = await Blog.find({}).populate('user')
