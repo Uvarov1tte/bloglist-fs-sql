@@ -1,10 +1,15 @@
 const blogsRouter = require('express').Router()
-const { blogFinder } = require('../utils/middleware')
-const { Blog } = require('../models')
+const { blogFinder, tokenExtractor } = require('../utils/middleware')
+const { Blog, User } = require('../models')
 
 blogsRouter.get('/', async (req, res) => {
-    // const blogs = await Blog.find({}).populate('user')
-    const blogs = await Blog.findAll()
+    const notes = await Blog.findAll({
+        attributes: { exclude: ['userId'] },
+        include: {
+            model: User,
+            attributes: ['name']
+        }
+    })
     console.log(blogs.map(n => n.toJSON()))
     res.json(blogs)
 })
@@ -21,7 +26,7 @@ blogsRouter.get('/:id', blogFinder, async (req, res, next) => {
     }
 })
 
-blogsRouter.post('/', async (req, res, next) => {
+blogsRouter.post('/', tokenExtractor, async (req, res, next) => {
     const body = req.body
 
     const blog = {
@@ -30,9 +35,9 @@ blogsRouter.post('/', async (req, res, next) => {
         url: body.url
     }
 
-
     try {
-        const result = await Blog.create(blog)
+        const user = await User.findByPk(req.decodedToken.id) 
+        const result = await Blog.create({ ...blog, userId: user.id, date: new Date() })
         console.log(result.toJSON())
         res.status(201).json(result)
     } catch (err) {
