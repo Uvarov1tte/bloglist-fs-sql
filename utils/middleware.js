@@ -16,8 +16,12 @@ const unknownEndpoint = (req, res) => {
 }
 
 const errorHandler = (error, req, res, next) => {
-    if (error.name === 'SequelizeValidationError') {
-        return res.status(400).json({ error: 'Blog title and url cannot be blank.' })
+    if (error.name === 'SequelizeValidationError' && error.message.includes('blog.title cannot be null')) {
+        return res.status(400).json({ error: 'Blog title cannot be blank.' })
+    } else if (error.name === 'SequelizeValidationError' && error.message.includes('blog.url cannot be null')) {
+        return res.status(400).json({ error: 'Blog url cannot be blank.' })
+    } else if (error.name === 'SequelizeValidationError' && error.message.includes('Validation isEmail on username failed')) {
+        return res.status(400).json({ error: 'Username must be a valid email address' })
     }
 
     next(error)

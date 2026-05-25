@@ -1,4 +1,3 @@
-console.log('dsfa')
 const Blog = require('./blog')
 const User = require('./user')
 

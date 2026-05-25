@@ -34,8 +34,7 @@ usersRouter.post('/', async (req, res, next) => {
 
         res.status(201).json(user)
     } catch (err) {
-        return res.status(400).json({ err })
-        //next(err)
+        next(err)
     }
 })
 

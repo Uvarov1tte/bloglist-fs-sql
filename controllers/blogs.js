@@ -41,6 +41,7 @@ blogsRouter.post('/', tokenExtractor, async (req, res, next) => {
         console.log(result.toJSON())
         res.status(201).json(result)
     } catch (err) {
+        console.log(err)
         next(err)
     }
 })
