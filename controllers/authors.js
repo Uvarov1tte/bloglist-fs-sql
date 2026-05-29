@@ -6,7 +6,7 @@ authorsRouter.get('/', async (req, res) => {
     const authors = await Blog.findAll({
         group: 'author',
         attributes: ['author',
-            [sequelize.fn('COUNT', sequelize.col('author')), 'articles'],
+            [sequelize.fn('COUNT', sequelize.col('author')), 'blogs'],
             [sequelize.fn('SUM', sequelize.col('likes')), 'likes']
         ],
         order: sequelize.literal('likes DESC'),

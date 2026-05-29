@@ -3,8 +3,7 @@ const { sequelize } = require('../utils/db')
 const { Blog, User } = require('../models')
 
 resetRouter.post('/', (req, res) => {
-    Blog.truncate()
-    User.truncate()
+    sequelize.truncate({ cascade: true, restartIdentity: true })
     res.status(201).send({ msg: 'ok' })
 })
 

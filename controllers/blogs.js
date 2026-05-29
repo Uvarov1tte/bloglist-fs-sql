@@ -73,9 +73,6 @@ blogsRouter.put('/:id', blogFinder, async (req, res, next) => {
     const body = req.body
     try {
         const blog = req.blog
-        blog.title = body.title
-        blog.author = body.author
-        blog.url = body.url
         blog.likes = body.likes
         await blog.save()
         res.json(blog)

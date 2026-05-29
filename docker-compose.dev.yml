@@ -1,21 +1,4 @@
-services: 
-  server:
-    env_file:
-      - ./.env
-    image: backend-dev
-    build:
-      context: .
-      dockerfile: dev.Dockerfile
-    volumes:
-      - .:/usr/src/app
-    container_name: server
-    restart: on-failure
-    command: bash -c "sleep 5; npm run dev"  # due to postgres keeps restarting in initialisation process => connection failed before postgres could accept connections
-    ports:
-    - 3003:3003
-    depends_on: 
-      - postgres
- 
+services:  
   postgres:
     image: postgres:18
     ports:
