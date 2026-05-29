@@ -8,17 +8,18 @@ const app = express()
 
 app.use(express.json())
 
-app.use('/blogs', blogsRouter)
-app.use('/users', usersRouter)
-app.use('/login', loginRouter)
-app.use('./authors', authorsRouter)
+app.use('/api/blogs', blogsRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
+app.use('/api/authors', authorsRouter)
 
 app.get('/', (req, res) => {
     console.log('hello')
-    res.send({ msg: 'hello' })
+    res.status(200).send({ msg: 'hello' })
 })
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
 module.exports = app
+
